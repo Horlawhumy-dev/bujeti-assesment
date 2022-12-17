@@ -1,0 +1,10 @@
+{% block content %}
+<h1>Total Classes: {{ count }} </h1>
+<ul>
+    {% for cls in classrooms %}
+        <li>Class UUID: {{ cls.uuid }}</li>
+        <br><br>
+        <li>Teacher Fullname: {{ cls.names }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
