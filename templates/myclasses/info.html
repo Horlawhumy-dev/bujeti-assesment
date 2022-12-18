@@ -1,0 +1,15 @@
+{% block content %}
+<div>
+    {% if messages %}
+         {% for message in messages %}
+             <center>
+                 <p>{{ message }}</p>
+                 <br><br>
+                 <a href={% url 'index' %}>Go Home</a>
+                 <br><br>
+                 <a href={% url 'login_teacher' %}>Login</a>
+             </center>
+         {% endfor %} 
+     {% endif %}
+  </div>
+{% endblock %}

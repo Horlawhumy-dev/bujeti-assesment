@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import requests
 import logging
+from django.contrib import messages
 from .forms import LoginForm, ClassCreateForm, UpdateClassForm
 
 
@@ -14,6 +15,7 @@ user_credentials = {
 def index(request):
     # latest_question_list = Question.objects.order_by('-pub_date')[:5]
     context = {'message': "It works"}
+    messages.success(request, 'Hi, Welcome to the application')
     return render(request, 'myclasses/base.html', context)
 
 def fetch_classroom(uuid, username, password):
@@ -92,7 +94,7 @@ def login_teacher(request):
                 "classrooms": res_data,
                 "count": res['count']
             }
-    
+            messages.success(request, "You have successfully logged in.")
             return render(request, 'myclasses/data_room.html', context)
     
     return render(request, 'myclasses/login_teacher.html', {"form": form})
@@ -108,14 +110,14 @@ def get_classroom(request, pk):
     context = {
         "classroom": res 
     }
-
+    messages.success(request, "You have successfully fetched a classroom.")
     return render(request, 'myclasses/classroom.html', context)
     
 
 def delete_classroom(request, pk):
-    
     del_classroom(pk, user_credentials['username'], user_credentials['password'])
-    return redirect('/login_teacher')
+    messages.success(request, "You have successfully deleted the classroom.")
+    return render(request, "myclasses/info.html", context)
     
 def create_classroom(request):
      
@@ -125,7 +127,8 @@ def create_classroom(request):
         if form.is_valid():
             data = form.cleaned_data
             create_class(data, username=user_credentials['username'], password=user_credentials['password'])
-            return redirect('/login_teacher')
+            messages.success(request, "You have successfully deleted the classroom.")
+            return render(request, "myclasses/info.html")
         
     return render(request, "myclasses/create_classroom.html", {"form": form})
 
@@ -140,10 +143,10 @@ def update_classroom(request, pk):
         
         if form.is_valid():
             data = form.cleaned_data
-            print(data)
             update_class(data, username=user_credentials['username'], password=user_credentials['password'])
             form = UpdateClassForm()
-            return redirect('/login_teacher')
+            messages.success(request, "You have successfully updated the classroom.")
+            return render(request, "myclasses/info.html", context)
             
     
     return render(request, "myclasses/update_classroom.html", {"form": form, "uuid": res['uuid']})

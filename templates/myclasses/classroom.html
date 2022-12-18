@@ -1,4 +1,5 @@
 {% block content %}
+{% include 'myclasses/alert.html' %}
 <div>
     <h1>Virtual Classroom Details</h1>
     {% if classroom.uuid %}
@@ -9,5 +10,7 @@
         <p>Classroom details not found</p>
     {% endif %}
 </div>
+<br><br>
+<a href={% url 'index' %}>Back Home</a>
 
 {% endblock %}

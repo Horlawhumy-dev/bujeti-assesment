@@ -1,11 +1,17 @@
 {% block content %}
+{% include 'myclasses/alert.html' %}
 <div>
-    <form action={% url 'login_teacher' %} method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login as teacher</button>
-    </form>
+    <center>
+        <br><br>
+        <form action={% url 'login_teacher' %} method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login as teacher</button>
+        </form>
+        <a href={% url 'index' %}>Back Home</a>
+        <br><br>
+    </center>
+   
 </div>
-<a href={% url 'index' %}>Back Home</a>
-<br><br>
+
 {% endblock %}

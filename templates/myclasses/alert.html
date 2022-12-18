@@ -1,0 +1,10 @@
+
+<div class="divmessages">
+  {% if messages %}
+       {% for message in messages %}
+           <center>
+               <p>{{ message }}</p>
+           </center>
+       {% endfor %} 
+   {% endif %}
+</div>

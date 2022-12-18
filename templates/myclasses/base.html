@@ -7,12 +7,17 @@
     <title>Class</title>
 </head>
 <body>
-    <h1>Welcome to my class</h1>
+    {% block content %}
+        <center>
+            <h1>This is the demo of class app!</h1>
 
-    <br><br>
+            <br><br>
 
-    <a href={% url 'login_teacher' %}>Login as a teacher</a>
+            <a href={% url 'login_teacher' %}>Login to your classes</a>
 
-    <br><br>
+        </center>
+        <br><br>
+    {% endblock %}
+    
 </body>
 </html>
