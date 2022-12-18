@@ -1,0 +1,11 @@
+{% block content %}
+<div>
+    <form action={% url 'login_teacher' %} method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login as teacher</button>
+    </form>
+</div>
+<a href={% url 'index' %}>Back Home</a>
+<br><br>
+{% endblock %}
