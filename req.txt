@@ -2,3 +2,4 @@ django==4.0
 requests
 python-dotenv
 gunicorn
+django-tailwind==3.4.0
