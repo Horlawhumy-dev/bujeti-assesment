@@ -10,18 +10,19 @@
     
 </head>
 <body>
-    {% block content %}
-    
+    {% include 'myclasses/alert.html' %}
+    <div>
         <center>
-            <h1 class="text-rose-600">This is the demo of class app!</h1>
-
             <br><br>
-
-            <a href={% url 'login_teacher' %}>Login to your classes</a>
-
+            <form action={% url 'index' %} method="POST">
+                {% csrf_token %}
+                <br><br>
+                {{ form.as_p }}
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 mt-8 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login as teacher</button>
+            </form>
+            <br>
         </center>
-        <br><br>
-    {% endblock %}
     
+    </div>
 </body>
 </html>

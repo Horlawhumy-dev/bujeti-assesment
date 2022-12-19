@@ -13,10 +13,21 @@ user_credentials = {
 
 
 def index(request):
-    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'message': "It works"}
-    messages.success(request, 'Hi, Welcome to the application')
-    return render(request, 'myclasses/base.html', context)
+    form = LoginForm()
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            res = fetch_classrooms(data['username'], data['password'])
+            res_data = get_classrooms()
+            context = {
+                "classrooms": res_data,
+                "count": res['count']
+            }
+            messages.success(request, "You have successfully logged in.")
+            return render(request, 'myclasses/data_room.html', context)
+    
+    return render(request, 'myclasses/base.html', {"form": form})
 
 def fetch_classroom(uuid, username, password):
     URL = f"https://app.learncube.com/api/virtual-classroom/classrooms/{uuid}/"
@@ -80,25 +91,7 @@ def get_classrooms():
         }
         res_data.append(data)
     return res_data
-
-
-def login_teacher(request):
-    form = LoginForm()
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            res = fetch_classrooms(data['username'], data['password'])
-            res_data = get_classrooms()
-            context = {
-                "classrooms": res_data,
-                "count": res['count']
-            }
-            messages.success(request, "You have successfully logged in.")
-            return render(request, 'myclasses/data_room.html', context)
     
-    return render(request, 'myclasses/login_teacher.html', {"form": form})
-
 
 
 
