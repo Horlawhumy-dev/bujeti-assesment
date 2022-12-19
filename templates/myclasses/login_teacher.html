@@ -1,13 +1,29 @@
+{% extends 'myclasses/base.html' %}
 {% block content %}
+
 {% include 'myclasses/alert.html' %}
 <div>
     <center>
         <br><br>
         <form action={% url 'login_teacher' %} method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login as teacher</button>
+            <div>
+                <label for="">Username</label>
+                <br>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">Password</label>
+                <br>
+                <input type="password">
+            </div>
+            
+            <br><br>
+            
+            <!-- {{ form.as_p }} -->
+            <button type="submit" class="text-rose-600 ">Login as teacher</button>
         </form>
+        <br>
         <a href={% url 'index' %}>Back Home</a>
         <br><br>
     </center>
