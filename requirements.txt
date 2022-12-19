@@ -3,3 +3,4 @@ requests
 python-dotenv
 gunicorn
 django-tailwind==3.4.0
+django_heroku
