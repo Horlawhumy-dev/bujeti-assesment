@@ -120,7 +120,7 @@ def create_classroom(request):
         if form.is_valid():
             data = form.cleaned_data
             create_class(data, username=user_credentials['username'], password=user_credentials['password'])
-            messages.success(request, "You have successfully deleted the classroom.")
+            messages.success(request, "You have successfully created the classroom.")
             return render(request, "myclasses/info.html")
         
     return render(request, "myclasses/create_classroom.html", {"form": form})
@@ -139,7 +139,7 @@ def update_classroom(request, pk):
             update_class(data, username=user_credentials['username'], password=user_credentials['password'])
             form = UpdateClassForm()
             messages.success(request, "You have successfully updated the classroom.")
-            return render(request, "myclasses/info.html", context)
+            return render(request, "myclasses/info.html")
             
     
     return render(request, "myclasses/update_classroom.html", {"form": form, "uuid": res['uuid']})

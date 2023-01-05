@@ -4,8 +4,19 @@
     <h1>Virtual Classroom Details</h1>
     {% if classroom.uuid %}
         <p>UUID: {{ classroom.uuid }}</p>
+        {% if classroom.start and classroom.end %}
+            <p>Start Date: {{ classroom.start }}</p>
+            <p>End Date: {{ classroom.end }}</p>
+        {% endif %}
+        {% if classroom.description %}
+            <p>Description: {{ classroom.description }}</p>
+        {% endif %}
+
+        <p></p>
         <p>Teacher Name: {{ classroom.teacher_first_name }} {{ classroom.teacher_last_name }}</p>
+        <p>Record Class: {{ classroom.record_class }}</p>
         <br><br>
+        
     {% else %}
         <p>Classroom details not found</p>
     {% endif %}
