@@ -1,18 +1,27 @@
 import os
+import logging
 from pathlib import Path
 import django_heroku
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--p*p04uo#254h-_6g$1kg_tui63^f+%r-rkye#1w^v7xghih+i'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG', False))
+PROTOCOL = "http"
+DOMAIN = "localhost:3000"
+
+if not DEBUG:
+    PROTOCOL = "https"
+    DOMAIN = ""
 
 ALLOWED_HOSTS = ['*']
 
@@ -26,10 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myclasses',
-    'tailwind',
-    'theme',
-    'django_browser_reload'
+    'rest_framework',
+    
+    'searchapp'
 ]
 
 MIDDLEWARE = [
@@ -40,15 +48,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
-ROOT_URLCONF = 'class_proj.urls'
+ROOT_URLCONF = 'bujeti.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -61,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'class_proj.wsgi.application'
+WSGI_APPLICATION = 'bujeti.wsgi.application'
 
 
 # Database
@@ -111,18 +118,43 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s \
+            [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': LOGLEVEL,
+            'handlers': ['console',]
+        },
+    },
+})
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
-TAILWIND_APP_NAME = 'theme'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
 django_heroku.settings(locals())
-NPM_BIN_PATH = '/usr/local/bin/npm'
-

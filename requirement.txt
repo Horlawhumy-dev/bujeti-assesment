@@ -1,6 +1,8 @@
+autopep8
 django==4.0
+djangorestframework
 requests
 python-dotenv
 gunicorn
-django-tailwind==3.4.0
 django_heroku
+pytest

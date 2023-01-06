@@ -1,5 +1,5 @@
 """
-ASGI config for class_proj project.
+ASGI config for bujeti project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'class_proj.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bujeti.settings')
 
 application = get_asgi_application()
